@@ -13,6 +13,7 @@ namespace Grapple {
 
         [Header("Layer Mask")]
         public LayerMask whatIsGrappeable;
+        public LayerMask fishMask;
 
         [Header("Objetos")]
         public Transform gunTip;
@@ -28,7 +29,6 @@ namespace Grapple {
         private Vector3 grapplingPoint = new(0, 0, 0);
         private float distance;
         private bool movil;
-        private bool fishing;
         private float defaultAirMultiplier;
         private bool zoomOut = true;
         private AudioSource grappleSound;
@@ -42,7 +42,8 @@ namespace Grapple {
             lr = GetComponent<LineRenderer>();
             defaultAirMultiplier = pl.getAirMultiplier();
             grappleSound = GetComponent<AudioSource>();
-            fishing = false;
+
+            hookDeplyed = false;
         }
 
         void Update() {
@@ -150,8 +151,8 @@ namespace Grapple {
         }
 
         void StartHook() {
-            if (Physics.Raycast(cam.position, cam.forward, out RaycastHit hitInfo, maxDistance, whatIsGrappeable)) {
-
+            if (Physics.Raycast(cam.position, cam.forward, out RaycastHit hitInfo, maxDistance, whatIsGrappeable))
+            {
                 hookDeplyed = true;
                 grappleSound.Play();
                 zoomOut = false;
@@ -163,47 +164,62 @@ namespace Grapple {
                 joint.autoConfigureConnectedAnchor = false;
                 joint.enablePreprocessing = false;
                 joint.enableCollision = true;
-                if (hitInfo.collider.CompareTag("IsFish")){
-                    Destroy(hitInfo.collider.gameObject);
+                if (hitInfo.collider.CompareTag("MovablePlatform"))
+                {
                     joint.connectedBody = hitInfo.rigidbody;
-                    distance = Vector3.Distance(player.position, anchor.position);
+                    distance = Vector3.Distance(player.position, grapplingPoint);
                     movil = true;
-                    //fishing = true;
                 }
-                else{
-                    //fishing = false;
-
-                    if (hitInfo.collider.CompareTag("MovablePlatform"))
-                    {
-                        joint.connectedBody = hitInfo.rigidbody;
-                        distance = Vector3.Distance(player.position, grapplingPoint);
-                        movil = true;
-                    }
-                    else
-                    {
-                        joint.connectedAnchor = grapplingPoint;
-                        distance = Vector3.Distance(player.position, anchor.position);
-                        movil = false;
-                    }
-
-                    joint.minDistance = distance * 0.25f;
-                    joint.spring = SpringForce;
-                    joint.damper = SpringDamper;
-                    joint.massScale = SpringMassScale;
-
-                    pl.setAirMultiplier(airBoost);
-
-                    lr.positionCount = 2;
+                else
+                {
+                    joint.connectedAnchor = grapplingPoint;
+                    distance = Vector3.Distance(player.position, anchor.position);
+                    movil = false;
                 }
+
+                joint.minDistance = distance * 0.25f;
+                joint.spring = SpringForce;
+                joint.damper = SpringDamper;
+                joint.massScale = SpringMassScale;
+
+                pl.setAirMultiplier(airBoost);
+
+                lr.positionCount = 2;
+            }
+            else if (Physics.Raycast(cam.position, cam.forward, out RaycastHit hitInfo2, maxDistance, fishMask)){
+                hookDeplyed = true;
+                grappleSound.Play();
+                //para objeto estatico
+                grapplingPoint = hitInfo2.point;
+                //para objeto en movimiento
+                anchor = hitInfo2.transform;
+                joint = player.gameObject.AddComponent<SpringJoint>();
+                joint.autoConfigureConnectedAnchor = false;
+                joint.enablePreprocessing = false;
+                joint.enableCollision = true;
+
+                joint.connectedBody = hitInfo2.rigidbody;
+                distance = Vector3.Distance(player.position, grapplingPoint);
+                movil = true;
+
+                joint.minDistance = distance * 0.25f;
+                joint.spring = 1;
+                joint.damper = 1;
+                joint.massScale = 1;
+
+                lr.positionCount = 2;
+                Destroy(hitInfo2.collider.gameObject,0.2f);
+                Invoke("StopHook", 0.2f);
             }
         }
+
 
         void DrawRope(bool flag) {
             if (!joint || anchor == null) return;
             lr.SetPosition(0, gunTip.position);
             //distingue entre punto en movimiento o estatico
             if (flag) {
-            lr.SetPosition(1, anchor.position);
+                lr.SetPosition(1, anchor.position);
             }
             else {
                 lr.SetPosition(1, grapplingPoint);

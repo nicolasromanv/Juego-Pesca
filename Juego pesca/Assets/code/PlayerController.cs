@@ -132,7 +132,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //resetea al jugador al morir
-        if (transform.position.y <= 41.5f) {
+        if (transform.position.y <= 42.5f) {
             deathSound.Play();
             transform.position = new Vector3(-87f, 50f, 19f);
             mouseX = 0;

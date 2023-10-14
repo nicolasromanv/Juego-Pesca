@@ -48,4 +48,4 @@ MonoBehaviour:
   nFish: 40
   rangoMin: -55
   rangoMax: 55
-  spawnHeight: 35
+  spawnHeight: 40
