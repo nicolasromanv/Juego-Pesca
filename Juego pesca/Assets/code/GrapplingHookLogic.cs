@@ -47,22 +47,15 @@ namespace Grapple {
         float rt;
         bool controllerConnected;
         string rareza;
-        Middleware misionText;
 
-        List<string> rarezasList = new List<string> { "comunes", "raros", "peculiares", "legendarios", "exóticos" };
+        string rarezasData;
         int cantidad;
-        int indexRareza;
         int tiempo;
         bool startMission;
 
         void Start() {
             startMission = false;
-            SetContadores(0, "Comunes", totalFishes);
-            SetContadores(1, "Raros", totalFishes);
-            SetContadores(2, "Peculiares", totalFishes);
-            SetContadores(3, "Legendarios", totalFishes);
-            SetContadores(4, "Exóticos", totalFishes);
-            SetContadores(5, "Total", totalFishes);
+            ResetCounters();
             lr = GetComponent<LineRenderer>();
             defaultAirMultiplier = pl.getAirMultiplier();
             grappleSound = GetComponent<AudioSource>();
@@ -235,8 +228,8 @@ namespace Grapple {
                 rareza = hitInfo2.collider.gameObject.GetComponent<Renderer>().material.ToString();
                 GetRareza(rareza);
 
-                Destroy(hitInfo2.collider.gameObject,0.2f);
                 Invoke("StopHook", 0.2f);
+                Destroy(hitInfo2.collider.gameObject,0.2f);
             } else if (Physics.Raycast(cam.position, cam.forward, out RaycastHit hitInfo3, maxDistance, mision)) {
                 hookDeplyed = true;
                 grappleSound.Play();
@@ -260,12 +253,14 @@ namespace Grapple {
 
                 lr.positionCount = 2;
 
-                misionText = hitInfo3.collider.gameObject.GetComponent<Middleware>();
-                ParseMission(misionText.GetText());
-                misionDescription.text = misionText.GetText();
+                GameObject missionObject = hitInfo3.collider.gameObject;
+                Missions missionInfo = missionObject.GetComponentInChildren<Missions>();
 
-                Destroy(hitInfo3.collider.gameObject, 0.2f);
+                GetMissionData(missionInfo);
+                missionInfo.SetRandomMission();
+
                 Invoke("StopHook", 0.2f);
+                ResetCounters();
             }
         }
 
@@ -321,21 +316,16 @@ namespace Grapple {
             }
         }
 
-        void ParseMission(string mision) {
-            string[] valores = mision.Split(" ");
-            cantidad = int.Parse(valores[1]);
-            indexRareza = rarezasList.IndexOf(valores[3]);
-            tiempo = int.Parse(valores[5]);
+        void GetMissionData(Missions mision) {
+            cantidad = mision.cantidad;
+            rarezasData = mision.rareza;
+            tiempo = mision.tiempo;
+            misionDescription.text = mision.GetText();
+
             startMission = true;
-            rarezasCounter = new List<int>{ 0, 0, 0, 0, 0 };
+            rarezasCounter = new List<int> { 0, 0, 0, 0, 0 };
             totalFishes = 0;
-            SetContadores(0, "Comunes", totalFishes);
-            SetContadores(1, "Raros", totalFishes);
-            SetContadores(2, "Peculiares", totalFishes);
-            SetContadores(3, "Legendarios", totalFishes);
-            SetContadores(4, "Exóticos", totalFishes);
-            SetContadores(5, "Total", totalFishes);
-            Debug.Log(string.Format("Cantidad: {0}, Rareza: {1}, Tiempo: {2}", cantidad, indexRareza, tiempo));
+            Debug.Log(string.Format("Cantidad: {0}, Rareza: {1}, Tiempo: {2}", cantidad, rarezasData, tiempo));
         }
 
         public bool GetStartMission() {
@@ -348,6 +338,17 @@ namespace Grapple {
 
         public float GetTime() {
             return tiempo;
+        }
+
+        void ResetCounters() {
+            rarezasCounter = new List<int> { 0, 0, 0, 0, 0 };
+            totalFishes = 0;
+            SetContadores(0, "Comunes", rarezasCounter[0]);
+            SetContadores(1, "Raros", rarezasCounter[1]);
+            SetContadores(2, "Peculiares", rarezasCounter[2]);
+            SetContadores(3, "Legendarios", rarezasCounter[3]);
+            SetContadores(4, "Exóticos", rarezasCounter[4]);
+            SetContadores(5, "Total", totalFishes);
         }
     }
 }

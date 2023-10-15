@@ -5,19 +5,26 @@ using TMPro;
 
 public class Missions : MonoBehaviour {
     // Start is called before the first frame update
+    [Header("Datos de misiones")]
+    public Renderer parentRenderer;
+    public int dificultad;
+    public int cantidad;
+    public string rareza;
+    public int tiempo;
+
     List<string> rarezas = new List<string> { "comunes", "raros", "peculiares", "legendarios", "exóticos" };
-    TextMeshPro mision;
+    TextMeshPro missionsTMP;
 
     void Start() {
-        mision = GetComponent<TextMeshPro>();
-        mision.text = GenerateRandomMission();
+        missionsTMP = GetComponent<TextMeshPro>();
+        missionsTMP.text = GenerateRandomMission();
     }
 
     // Update is called once per frame
     void Update() {
-        mision = GetComponent<TextMeshPro>();
-        // if (mision != null) {
-        //     Debug.Log("Mision tomada");
+        missionsTMP = GetComponent<TextMeshPro>();
+        // if (missionsTMP != null) {
+        //     Debug.Log("missionsTMP tomada");
         // }
     }
 
@@ -44,6 +51,7 @@ public class Missions : MonoBehaviour {
         }
         return rarezas[index];
     }
+
     private int GetTiempoRandom(int dificultad) {
         switch (dificultad) {
             case 0:
@@ -54,12 +62,32 @@ public class Missions : MonoBehaviour {
                 return Random.Range(1, 2);
         }
     }
+
     private string GenerateRandomMission() {
-        int dificultad = Random.Range(0, 2);
-        int cantidad = GetCantidadRandom(dificultad);
-        string rareza = GetRarezaRandom(dificultad);
-        int tiempo = GetTiempoRandom(dificultad);
-        string mision = "Recolecta " + cantidad + " peces " + rareza + " en " + tiempo + " [min] o menos.";
-        return mision;
+        dificultad = Random.Range(0, 3);
+        cantidad = GetCantidadRandom(dificultad);
+        rareza = GetRarezaRandom(dificultad);
+        tiempo = GetTiempoRandom(dificultad);
+        switch (dificultad) {
+            case 0:
+                parentRenderer.material.SetColor("_EmissionColor", Color.green);
+                break;
+            case 1:
+                parentRenderer.material.SetColor("_EmissionColor", Color.yellow);
+                break;
+            case 2:
+                parentRenderer.material.SetColor("_EmissionColor", Color.red);
+                break;
+        }
+        string missionsTMP = "Recolecta " + cantidad + " peces " + rareza + " en " + tiempo + " [min] o menos.";
+        return missionsTMP;
+    }
+
+    public void SetRandomMission() {
+        missionsTMP.text = GenerateRandomMission();
+    }
+
+    public string GetText() {
+        return missionsTMP.text;
     }
 }
