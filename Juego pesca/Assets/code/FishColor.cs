@@ -1,49 +1,63 @@
 using UnityEngine;
 
 public class FishColor : MonoBehaviour {
+    public Material[] colors; // Arreglo de materiales
+    public float[] materialProbabilities; // Arreglo de probabilidades para cada material
+
     private Renderer material; // Declaración del campo material.
-
-    public Material colors_white;
-    public Material colors_green;
-    public Material colors_blue;
-    public Material colors_purple;
-    public Material colors_yellow;
-
-    private Material[] colors;
     private Transform fishSize;
 
     // Start is called before the first frame update
     void Start() {
         material = GetComponent<Renderer>(); // Asigna el Renderer al campo material.
         fishSize = GetComponent<Transform>();
-        colors = new Material[] { colors_white, colors_green, colors_blue, colors_purple, colors_yellow };
         AssignRandomMaterial();
     }
+
     public void AssignRandomMaterial() {
-        // Selecciona un índice aleatorio dentro del rango de materiales
-        int randomMaterialIndex = Random.Range(0, colors.Length);
+        if (colors.Length == 0 || materialProbabilities.Length != colors.Length) {
+            Debug.LogError("Asegúrate de que los arreglos de materiales y probabilidades sean válidos.");
+            return;
+        }
+
+        // Calcula el rango de probabilidades acumulativas
+        float[] cumulativeProbabilities = new float[materialProbabilities.Length];
+        cumulativeProbabilities[0] = materialProbabilities[0];
+        for (int i = 1; i < materialProbabilities.Length; i++) {
+            cumulativeProbabilities[i] = cumulativeProbabilities[i - 1] + materialProbabilities[i];
+        }
+
+        // Genera un número aleatorio dentro del rango total de probabilidades
+        float randomValue = Random.Range(0f, cumulativeProbabilities[cumulativeProbabilities.Length - 1]);
+
+        // Encuentra el índice del material en función del valor aleatorio
+        int selectedMaterialIndex = 0;
+        for (int i = 0; i < cumulativeProbabilities.Length; i++) {
+            if (randomValue <= cumulativeProbabilities[i]) {
+                selectedMaterialIndex = i;
+                break;
+            }
+        }
 
         // Obtiene el Renderer del objeto y asigna el material seleccionado
         Renderer renderer = GetComponent<Renderer>();
-        if (renderer != null){
-            // Utiliza el material seleccionado del arreglo fishMaterials o de las variables públicas
-            renderer.material = colors[randomMaterialIndex];
-            SetSize(randomMaterialIndex);
+        if (renderer != null) {
+            renderer.material = colors[selectedMaterialIndex];
+            SetSize(selectedMaterialIndex);
         }
-        else{
+        else {
             Debug.LogError("El objeto no tiene un componente Renderer.");
         }
     }
-    public void SetSize(int index)
-    {
+
+    public void SetSize(int index) {
         fishSize.transform.localScale = SetValues(index);
     }
-    public Vector3 SetValues(int index)
-    {
+
+    public Vector3 SetValues(int index) {
 
         Vector3 vec = new Vector3(0, 0, 0);
-        switch (index)
-        {
+        switch (index) {
             case 0:
                 vec.x = Random.Range(1f, 1.5f);
                 vec.y = Random.Range(1f, 1.5f);

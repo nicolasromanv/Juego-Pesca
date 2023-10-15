@@ -116,6 +116,18 @@ MonoBehaviour:
   colors_blue: {fileID: 2100000, guid: 2173109e66aa2ce4bb78134f236a3217, type: 2}
   colors_purple: {fileID: 2100000, guid: 5d120dba1a3c90744854a0cd5f426b3d, type: 2}
   colors_yellow: {fileID: 2100000, guid: 3c3e285c182882d429595c015d52c4be, type: 2}
+  colors:
+  - {fileID: 2100000, guid: 9d1f2f695803e0941971ee6f56e4b28c, type: 2}
+  - {fileID: 2100000, guid: 16c2cb744e46a9b4086a2f76a4224d76, type: 2}
+  - {fileID: 2100000, guid: 2173109e66aa2ce4bb78134f236a3217, type: 2}
+  - {fileID: 2100000, guid: 5d120dba1a3c90744854a0cd5f426b3d, type: 2}
+  - {fileID: 2100000, guid: 3c3e285c182882d429595c015d52c4be, type: 2}
+  materialProbabilities:
+  - 0.3
+  - 0.25
+  - 0.2
+  - 0.15
+  - 0.1
 --- !u!114 &4398972751857200075
 MonoBehaviour:
   m_ObjectHideFlags: 0
