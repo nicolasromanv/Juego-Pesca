@@ -5,25 +5,20 @@ using TMPro;
 
 public class Missions : MonoBehaviour {
     // Start is called before the first frame update
-    List<string> misiones = new List<string>();
     List<string> rarezas = new List<string> { "comunes", "raros", "peculiares", "legendarios", "exóticos" };
-    public TextMeshPro misionesList;
-    int totalMissions = 4;
-    int misionesCount = 0;
+    TextMeshPro mision;
 
     void Start() {
-        misiones.Add(GenerateRandomMission());
-        misionesList.text = GetRandomMission();
+        mision = GetComponent<TextMeshPro>();
+        mision.text = GenerateRandomMission();
     }
 
     // Update is called once per frame
     void Update() {
-        misionesCount = misiones.Count;
-        if (misionesCount < totalMissions ) {
-            misiones.Add(GenerateRandomMission());
-        }
-        Debug.Log(misionesCount);
-            misionesList.text = GetRandomMission();
+        mision = GetComponent<TextMeshPro>();
+        // if (mision != null) {
+        //     Debug.Log("Mision tomada");
+        // }
     }
 
     private int GetCantidadRandom(int dificultad) {
@@ -31,7 +26,7 @@ public class Missions : MonoBehaviour {
             case 0:
                 return Random.Range(5, 10);
             default:
-                return Random.Range(15, 20);
+                return Random.Range(8, 15);
         }
     }
     private string GetRarezaRandom(int dificultad) {
@@ -60,18 +55,11 @@ public class Missions : MonoBehaviour {
         }
     }
     private string GenerateRandomMission() {
-        misionesCount++;
         int dificultad = Random.Range(0, 2);
         int cantidad = GetCantidadRandom(dificultad);
         string rareza = GetRarezaRandom(dificultad);
         int tiempo = GetTiempoRandom(dificultad);
         string mision = "Recolecta " + cantidad + " peces " + rareza + " en " + tiempo + " [min] o menos.";
         return mision;
-    }
-
-    private string GetRandomMission() {
-        int index = Random.Range(0, misiones.Count);
-        Debug.Log("Index: "+index+". Mision: " + misiones[index]);
-        return misiones[index];
     }
 }

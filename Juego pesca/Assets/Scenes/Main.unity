@@ -1042,6 +1042,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7414922225942798325, guid: b2d75badb84162a4b8489a8125e2992f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7414922226082182342, guid: b2d75badb84162a4b8489a8125e2992f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1064,6 +1068,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7414922226082182342, guid: b2d75badb84162a4b8489a8125e2992f, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7414922227445351664, guid: b2d75badb84162a4b8489a8125e2992f, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7414922227518963921, guid: b2d75badb84162a4b8489a8125e2992f, type: 3}
@@ -1141,6 +1149,18 @@ PrefabInstance:
     - target: {fileID: 7414922227518963921, guid: b2d75badb84162a4b8489a8125e2992f, type: 3}
       propertyPath: whatIsGrappeable.m_Bits
       value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 7414922227683117885, guid: b2d75badb84162a4b8489a8125e2992f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7414922228011097745, guid: b2d75badb84162a4b8489a8125e2992f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7414922228011097745, guid: b2d75badb84162a4b8489a8125e2992f, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7414922228011097746, guid: b2d75badb84162a4b8489a8125e2992f, type: 3}
       propertyPath: m_LocalPosition.x

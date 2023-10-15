@@ -328,10 +328,15 @@ namespace Grapple {
             tiempo = int.Parse(valores[5]);
             startMission = true;
             rarezasCounter = new List<int>{ 0, 0, 0, 0, 0 };
+            totalFishes = 0;
+            SetContadores(0, "Comunes", totalFishes);
+            SetContadores(1, "Raros", totalFishes);
+            SetContadores(2, "Peculiares", totalFishes);
+            SetContadores(3, "Legendarios", totalFishes);
+            SetContadores(4, "Exóticos", totalFishes);
+            SetContadores(5, "Total", totalFishes);
             Debug.Log(string.Format("Cantidad: {0}, Rareza: {1}, Tiempo: {2}", cantidad, indexRareza, tiempo));
         }
-
-
 
         public bool GetStartMission() {
             return startMission;

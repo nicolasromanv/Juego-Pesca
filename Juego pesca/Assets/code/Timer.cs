@@ -21,7 +21,6 @@ public class Timer : MonoBehaviour {
     void Update() {
         timeSetted = hookLogic.GetStartMission();
         flag = timeSetted;
-        Debug.Log(string.Format("Tiempo: {0}", timer.text));
         if (flag) {
             if (timeSetted) {
                 tiempo = hookLogic.GetTime()*60;
