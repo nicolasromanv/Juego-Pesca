@@ -1,0 +1,48 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+using Grapple;
+
+public class Timer : MonoBehaviour {
+    TextMeshProUGUI timer;
+    public float tiempo = 0f;
+    bool flag;
+    bool timeSetted;
+    public GrapplingHookLogic hookLogic;
+    // Start is called before the first frame update
+    void Start() {
+        timer = GetComponent<TextMeshProUGUI>();
+        flag = false;
+        timeSetted = false;
+    }
+
+    // Update is called once per frame
+    void Update() {
+        timeSetted = hookLogic.GetStartMission();
+        flag = timeSetted;
+        Debug.Log(string.Format("Tiempo: {0}", timer.text));
+        if (flag) {
+            if (timeSetted) {
+                tiempo = hookLogic.GetTime()*60;
+                hookLogic.SetStartMission(false);
+            }
+        }
+
+        if (tiempo > 0f) {
+            tiempo -= Time.deltaTime;
+            SetTimer(tiempo);
+        }
+
+        timer.text = tiempo.ToString("F3");
+        if (tiempo <= 0f) {
+            timer.text = "";
+            flag = false;
+        }
+    }
+
+
+    void SetTimer(float limite) {
+        timer.text = limite.ToString("F3");
+    }
+}

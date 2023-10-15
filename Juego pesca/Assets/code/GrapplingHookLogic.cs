@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using System.Collections.Generic;
 
 namespace Grapple {
     public class GrapplingHookLogic : MonoBehaviour {
@@ -14,6 +16,7 @@ namespace Grapple {
         [Header("Layer Mask")]
         public LayerMask whatIsGrappeable;
         public LayerMask fishMask;
+        public LayerMask mision;
 
         [Header("Objetos")]
         public Transform gunTip;
@@ -22,6 +25,12 @@ namespace Grapple {
         public Camera camCamera;
         public GameObject crosshair;
         public GameObject pulsera;
+        public TextMeshProUGUI misionDescription;
+
+        [Header("Rarezas")]
+        public TextMeshProUGUI[] rarezas;
+        private List<int> rarezasCounter = new List<int> { 0, 0, 0, 0, 0 };
+        private int totalFishes = 0;
 
         private LineRenderer lr;
         private Transform anchor;
@@ -37,8 +46,23 @@ namespace Grapple {
         bool hookDeplyed;
         float rt;
         bool controllerConnected;
+        string rareza;
+        Middleware misionText;
+
+        List<string> rarezasList = new List<string> { "comunes", "raros", "peculiares", "legendarios", "exóticos" };
+        int cantidad;
+        int indexRareza;
+        int tiempo;
+        bool startMission;
 
         void Start() {
+            startMission = false;
+            SetContadores(0, "Comunes", totalFishes);
+            SetContadores(1, "Raros", totalFishes);
+            SetContadores(2, "Peculiares", totalFishes);
+            SetContadores(3, "Legendarios", totalFishes);
+            SetContadores(4, "Exóticos", totalFishes);
+            SetContadores(5, "Total", totalFishes);
             lr = GetComponent<LineRenderer>();
             defaultAirMultiplier = pl.getAirMultiplier();
             grappleSound = GetComponent<AudioSource>();
@@ -105,7 +129,7 @@ namespace Grapple {
             }
 
             //detiene el gancho al morir
-            if (player.position.y <= -30) {
+            if (player.position.y <= 43.5f) {
                 StopHook();
             }
 
@@ -151,8 +175,7 @@ namespace Grapple {
         }
 
         void StartHook() {
-            if (Physics.Raycast(cam.position, cam.forward, out RaycastHit hitInfo, maxDistance, whatIsGrappeable))
-            {
+            if (Physics.Raycast(cam.position, cam.forward, out RaycastHit hitInfo, maxDistance, whatIsGrappeable)) {
                 hookDeplyed = true;
                 grappleSound.Play();
                 zoomOut = false;
@@ -208,7 +231,40 @@ namespace Grapple {
                 joint.massScale = 1;
 
                 lr.positionCount = 2;
+
+                rareza = hitInfo2.collider.gameObject.GetComponent<Renderer>().material.ToString();
+                GetRareza(rareza);
+
                 Destroy(hitInfo2.collider.gameObject,0.2f);
+                Invoke("StopHook", 0.2f);
+            } else if (Physics.Raycast(cam.position, cam.forward, out RaycastHit hitInfo3, maxDistance, mision)) {
+                hookDeplyed = true;
+                grappleSound.Play();
+                //para objeto estatico
+                grapplingPoint = hitInfo3.point;
+                //para objeto en movimiento
+                anchor = hitInfo3.transform;
+                joint = player.gameObject.AddComponent<SpringJoint>();
+                joint.autoConfigureConnectedAnchor = false;
+                joint.enablePreprocessing = false;
+                joint.enableCollision = true;
+
+                joint.connectedBody = hitInfo3.rigidbody;
+                distance = Vector3.Distance(player.position, grapplingPoint);
+                movil = true;
+
+                joint.minDistance = distance * 0.25f;
+                joint.spring = 1;
+                joint.damper = 1;
+                joint.massScale = 1;
+
+                lr.positionCount = 2;
+
+                misionText = hitInfo3.collider.gameObject.GetComponent<Middleware>();
+                ParseMission(misionText.GetText());
+                misionDescription.text = misionText.GetText();
+
+                Destroy(hitInfo3.collider.gameObject, 0.2f);
                 Invoke("StopHook", 0.2f);
             }
         }
@@ -234,5 +290,59 @@ namespace Grapple {
             lr.positionCount = 0;
         }
 
+        void SetContadores(int index, string rareza, int value) {
+            rarezas[index].text = rareza+ ": " + value;
+        }
+
+        void GetRareza(string rareza) {
+            totalFishes++;
+            SetContadores(5, "Total", totalFishes);
+            switch (rareza) {
+                case "fish mat_white (Instance) (UnityEngine.Material)":
+                    rarezasCounter[0]++;
+                    SetContadores(0, "Comunes", rarezasCounter[0]);
+                    break;
+                case "fish mat_green (Instance) (UnityEngine.Material)":
+                    rarezasCounter[1]++;
+                    SetContadores(1, "Raros", rarezasCounter[1]);
+                    break;
+                case "fish mat_blue (Instance) (UnityEngine.Material)":
+                    rarezasCounter[2]++;
+                    SetContadores(2, "Peculiares", rarezasCounter[2]);
+                    break;
+                case "fish mat_purple (Instance) (UnityEngine.Material)":
+                    rarezasCounter[3]++;
+                    SetContadores(3, "Legendarios", rarezasCounter[3]);
+                    break;
+                default:
+                    rarezasCounter[4]++;
+                    SetContadores(4, "Exóticos", rarezasCounter[4]);
+                    break;
+            }
+        }
+
+        void ParseMission(string mision) {
+            string[] valores = mision.Split(" ");
+            cantidad = int.Parse(valores[1]);
+            indexRareza = rarezasList.IndexOf(valores[3]);
+            tiempo = int.Parse(valores[5]);
+            startMission = true;
+            rarezasCounter = new List<int>{ 0, 0, 0, 0, 0 };
+            Debug.Log(string.Format("Cantidad: {0}, Rareza: {1}, Tiempo: {2}", cantidad, indexRareza, tiempo));
+        }
+
+
+
+        public bool GetStartMission() {
+            return startMission;
+        }
+
+        public void SetStartMission(bool flag) {
+            startMission = flag;
+        }
+
+        public float GetTime() {
+            return tiempo;
+        }
     }
 }

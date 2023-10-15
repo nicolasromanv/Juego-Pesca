@@ -9,11 +9,12 @@ TagManager:
   - NoGrappableZone
   - MovableNoGrappablePlatform
   - IsFish
+  - Astronauta
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Mission
   - Water
   - UI
   - Grappable

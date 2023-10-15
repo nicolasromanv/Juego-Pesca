@@ -6,8 +6,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController : MonoBehaviour {
     [Header("Propiedades de la camara")]
     public Camera cam;
     public Transform orientation;

@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class FishColor : MonoBehaviour
-{
+public class FishColor : MonoBehaviour {
     private Renderer material; // Declaración del campo material.
 
     public Material colors_white;
@@ -14,15 +13,13 @@ public class FishColor : MonoBehaviour
     private Transform fishSize;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         material = GetComponent<Renderer>(); // Asigna el Renderer al campo material.
         fishSize = GetComponent<Transform>();
         colors = new Material[] { colors_white, colors_green, colors_blue, colors_purple, colors_yellow };
         AssignRandomMaterial();
     }
-    public void AssignRandomMaterial()
-    {
+    public void AssignRandomMaterial() {
         // Selecciona un índice aleatorio dentro del rango de materiales
         int randomMaterialIndex = Random.Range(0, colors.Length);
 
