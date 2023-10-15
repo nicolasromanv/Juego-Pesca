@@ -25,12 +25,19 @@ namespace Grapple {
         public Camera camCamera;
         public GameObject crosshair;
         public GameObject pulsera;
-        public TextMeshProUGUI misionDescription;
+        public GameObject fishPrefab;
+        public FishGenerator generator;
 
         [Header("Rarezas")]
         public TextMeshProUGUI[] rarezas;
         private List<int> rarezasCounter = new List<int> { 0, 0, 0, 0, 0 };
+        List<string> rarezasList = new List<string> { "comunes", "raros", "peculiares", "legendarios", "exóticos" };
         private int totalFishes = 0;
+
+        [Header("UI")]
+        public TextMeshProUGUI winLabel;
+        public TextMeshProUGUI misionDescription;
+        public Timer timer;
 
         private LineRenderer lr;
         private Transform anchor;
@@ -64,6 +71,9 @@ namespace Grapple {
         }
 
         void Update() {
+
+            WinChecker();
+
             //cambiar color de la mira
             RaycastHit distancia;
             if (Physics.Raycast(cam.position, cam.forward, out distancia, whatIsGrappeable)) {
@@ -230,6 +240,8 @@ namespace Grapple {
 
                 Invoke("StopHook", 0.2f);
                 Destroy(hitInfo2.collider.gameObject,0.2f);
+                Instantiate(fishPrefab, generator.SetRandomPosition(), Quaternion.identity);
+
             } else if (Physics.Raycast(cam.position, cam.forward, out RaycastHit hitInfo3, maxDistance, mision)) {
                 hookDeplyed = true;
                 grappleSound.Play();
@@ -319,13 +331,15 @@ namespace Grapple {
         void GetMissionData(Missions mision) {
             cantidad = mision.cantidad;
             rarezasData = mision.rareza;
+
             tiempo = mision.tiempo;
             misionDescription.text = mision.GetText();
 
             startMission = true;
             rarezasCounter = new List<int> { 0, 0, 0, 0, 0 };
             totalFishes = 0;
-            Debug.Log(string.Format("Cantidad: {0}, Rareza: {1}, Tiempo: {2}", cantidad, rarezasData, tiempo));
+            timer.SetPause(false);
+            winLabel.text = "Misión actual:";
         }
 
         public bool GetStartMission() {
@@ -349,6 +363,23 @@ namespace Grapple {
             SetContadores(3, "Legendarios", rarezasCounter[3]);
             SetContadores(4, "Exóticos", rarezasCounter[4]);
             SetContadores(5, "Total", totalFishes);
+        }
+
+        void WinChecker(){
+            Debug.Log(rarezasList.IndexOf(rarezasData));
+            float tiempoActual = timer.GetTimer();
+            if (rarezasList.IndexOf(rarezasData) != -1){
+                if ((rarezasCounter[rarezasList.IndexOf(rarezasData)] == cantidad) && tiempoActual > 0){
+                    winLabel.text = "Misión cumplida";
+                    misionDescription.text = "";
+                    timer.SetPause(true);
+                }
+                else if (tiempoActual <= 0){
+                    winLabel.text = "Misión fallida";
+                    misionDescription.text = "";
+                }
+            }
+            
         }
     }
 }

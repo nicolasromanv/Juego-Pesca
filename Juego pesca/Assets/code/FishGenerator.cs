@@ -34,7 +34,7 @@ public class FishGenerator : MonoBehaviour {
         return rangoMax;
     }
 
-    private Vector3 SetRandomPosition(){
+    public Vector3 SetRandomPosition(){
         float randomX = UnityEngine.Random.Range(rangoMin, rangoMax);
         float randomZ = UnityEngine.Random.Range(rangoMin, rangoMax);
         return new Vector3(randomX, spawnHeight, randomZ);

@@ -9,6 +9,7 @@ public class Timer : MonoBehaviour {
     public float tiempo = 0f;
     bool flag;
     bool timeSetted;
+    bool paused;
     public GrapplingHookLogic hookLogic;
     // Start is called before the first frame update
     void Start() {
@@ -21,27 +22,39 @@ public class Timer : MonoBehaviour {
     void Update() {
         timeSetted = hookLogic.GetStartMission();
         flag = timeSetted;
-        if (flag) {
-            if (timeSetted) {
-                tiempo = hookLogic.GetTime()*60;
-                hookLogic.SetStartMission(false);
+
+        if (!paused){
+            if (flag) {
+                if (timeSetted) {
+                    tiempo = hookLogic.GetTime()*60;
+                    hookLogic.SetStartMission(false);
+                }
+            }
+
+            if (tiempo > 0f) {
+                tiempo -= Time.deltaTime;
+                SetTimer(tiempo);
+            }
+
+            timer.text = tiempo.ToString("F3");
+            if (tiempo <= 0f) {
+                timer.text = "";
+                flag = false;
             }
         }
-
-        if (tiempo > 0f) {
-            tiempo -= Time.deltaTime;
-            SetTimer(tiempo);
-        }
-
-        timer.text = tiempo.ToString("F3");
-        if (tiempo <= 0f) {
+        else{
             timer.text = "";
-            flag = false;
         }
     }
 
+    public void SetPause(bool flag){
+        paused = flag;
+    }
 
-    void SetTimer(float limite) {
+    public void SetTimer(float limite) {
         timer.text = limite.ToString("F3");
+    }
+    public float GetTimer(){
+        return tiempo;
     }
 }
