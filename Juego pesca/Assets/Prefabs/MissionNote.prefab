@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5295332445012912631}
   - component: {fileID: 5295332445012912624}
   - component: {fileID: 5295332445012912630}
-  - component: {fileID: 5295332445012912629}
   m_Layer: 3
   m_Name: Mission Text
   m_TagString: GrappableObject
@@ -186,21 +185,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 080f45b6e48f14049bcf0ff03fbca564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  misionesList: {fileID: 5295332445012912624}
---- !u!64 &5295332445012912629
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5295332445012912626}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  parentRenderer: {fileID: 5295332446812678916}
+  dificultad: 0
+  cantidad: 0
+  rareza: 
+  tiempo: 0
 --- !u!1 &5295332446812678919
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,7 +202,6 @@ GameObject:
   - component: {fileID: 5295332446812678939}
   - component: {fileID: 5295332446812678916}
   - component: {fileID: 5295332446812678917}
-  - component: {fileID: 5295332446812678938}
   m_Layer: 3
   m_Name: MissionNote
   m_TagString: GrappableObject
@@ -301,16 +289,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &5295332446812678938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5295332446812678919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de8e091084d909748bc5317fd8c677e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  texto: {fileID: 5295332445012912624}

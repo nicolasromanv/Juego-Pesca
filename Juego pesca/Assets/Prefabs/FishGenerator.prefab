@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishObject: {fileID: 2065755029069388119, guid: d871bb2d78a230140a51e8e4522640b4, type: 3}
-  nFish: 40
+  nFish: 100
   rangoMin: -55
   rangoMax: 55
   spawnHeight: 40

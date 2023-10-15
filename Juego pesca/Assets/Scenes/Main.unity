@@ -5,11 +5,11 @@ OcclusionCullingSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_OcclusionBakeSettings:
-    smallestOccluder: 5
+    smallestOccluder: 2
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: 51319c75828aa294185293d303ff6643
+  m_OcclusionCullingData: {fileID: 36300000, guid: 51e46a3648bb3464da44fcc4cd67813c, type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 90eed2bd0ffbb5143a240998c09ac628, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: d6ba62a9cc3bda44599ff87b29cceb62, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 493abdabb0d9086419a0c5c19a57a033, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -747,31 +747,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 233315186}
   m_CullTransparentMesh: 1
---- !u!1 &238713665 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8964982805650252465, guid: 85a0e7682c6be18488538000cafbb740, type: 3}
-  m_PrefabInstance: {fileID: 1982357676}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &238713667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 238713665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Version: 1
-  m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
-  m_LightLayerMask: 1
-  m_CustomShadowLayers: 0
-  m_ShadowLayerMask: 1
-  m_LightCookieSize: {x: 1, y: 1}
-  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1 &254925993 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 770a4fbe5cdefba4893ac86ea837ae38, type: 3}
