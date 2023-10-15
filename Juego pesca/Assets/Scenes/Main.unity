@@ -1035,6 +1035,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6914442069722486947, guid: b2d75badb84162a4b8489a8125e2992f, type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6914442069722486947, guid: b2d75badb84162a4b8489a8125e2992f, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ac4ef547bbaae0e44a2c6d1f6835e6a3, type: 3}
     - target: {fileID: 7414922225942798325, guid: b2d75badb84162a4b8489a8125e2992f, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -1163,6 +1171,10 @@ PrefabInstance:
       propertyPath: whatIsGrappeable.m_Bits
       value: 64
       objectReference: {fileID: 0}
+    - target: {fileID: 7414922227518963945, guid: b2d75badb84162a4b8489a8125e2992f, type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7414922227683117885, guid: b2d75badb84162a4b8489a8125e2992f, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -1199,7 +1211,9 @@ PrefabInstance:
       propertyPath: defaultSsensitivity
       value: 300
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1827789422429440464, guid: b2d75badb84162a4b8489a8125e2992f, type: 3}
+    - {fileID: 1112178890928479597, guid: b2d75badb84162a4b8489a8125e2992f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b2d75badb84162a4b8489a8125e2992f, type: 3}
 --- !u!1001 &330313871
 PrefabInstance:
