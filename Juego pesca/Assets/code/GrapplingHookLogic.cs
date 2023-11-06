@@ -35,8 +35,10 @@ namespace Grapple {
         private int totalFishes = 0;
 
         [Header("UI")]
+        public bool inStore;
         public TextMeshProUGUI winLabel;
         public TextMeshProUGUI misionDescription;
+        public TextMeshProUGUI economiaPlateada;
         public Timer timer;
 
         private LineRenderer lr;
@@ -48,6 +50,7 @@ namespace Grapple {
         private float defaultAirMultiplier;
         private bool zoomOut = true;
         private AudioSource grappleSound;
+        private int money;
 
         public PlayerController pl;
         bool hookDeplyed;
@@ -62,6 +65,8 @@ namespace Grapple {
 
         void Start() {
             startMission = false;
+            money = 0;
+            economiaPlateada.text = "Alhajas: " + money;
             ResetCounters();
             lr = GetComponent<LineRenderer>();
             defaultAirMultiplier = pl.getAirMultiplier();
@@ -71,9 +76,6 @@ namespace Grapple {
         }
 
         void Update() {
-
-            WinChecker();
-
             //cambiar color de la mira
             RaycastHit distancia;
             if (Physics.Raycast(cam.position, cam.forward, out distancia, whatIsGrappeable)) {
@@ -131,6 +133,11 @@ namespace Grapple {
                 }
             }
 
+            if (Input.GetKeyDown(KeyCode.E) && inStore)
+            {
+                //open store panel
+            }
+
             //detiene el gancho al morir
             if (player.position.y <= 43.5f) {
                 StopHook();
@@ -161,9 +168,6 @@ namespace Grapple {
             while (true) {
                 var controles = Input.GetJoystickNames();
                 controllerConnected = controles.Length > 0 ? (controles[0] != "") : false;
-                //if (controles.Length > 0) {
-                //controllerConnected = controles[0] != "";
-                //}
                 
                 yield return new WaitForSeconds(1f);
             }
@@ -326,6 +330,7 @@ namespace Grapple {
                     SetContadores(4, "Exóticos", rarezasCounter[4]);
                     break;
             }
+            WinChecker();
         }
 
         void GetMissionData(Missions mision) {
@@ -371,7 +376,11 @@ namespace Grapple {
             if (rarezasList.IndexOf(rarezasData) != -1){
                 if ((rarezasCounter[rarezasList.IndexOf(rarezasData)] == cantidad) && tiempoActual > 0){
                     winLabel.text = "Misión cumplida";
+                    // economia plateada
+                    money += 100;
+                    economiaPlateada.text = "Alhajas: " + money;
                     misionDescription.text = "";
+                    ResetCounters();
                     timer.SetPause(true);
                 }
                 else if (tiempoActual <= 0){
