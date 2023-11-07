@@ -8,7 +8,7 @@ public class PlayerGate1 : MonoBehaviour
     public Transform obstacle; 
     public float interactionDistance = 5.5f; 
     public GameObject obstacleObject; 
-
+    public GameObject textoObject;
     void Update()
     {
         // Calcula la distancia entre el jugador y el obstáculo.
@@ -20,6 +20,8 @@ public class PlayerGate1 : MonoBehaviour
             {
                 obstacleObject.GetComponent<MeshCollider>().enabled = false;
                 obstacleObject.GetComponent<MeshRenderer>().enabled = false;
+                textoObject.GetComponent<MeshRenderer>().enabled = false;
+
                 Debug.Log("PUERTA 1 OPEN :D!!");
 
             }

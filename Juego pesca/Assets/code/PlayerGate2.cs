@@ -8,6 +8,7 @@ public class PlayerGate2 : MonoBehaviour
     public Transform obstacle; 
     public float interactionDistance = 5.5f; 
     public GameObject obstacleObject; 
+    public GameObject textoObject;
 
     void Update()
     {
@@ -20,6 +21,8 @@ public class PlayerGate2 : MonoBehaviour
             {
                 obstacleObject.GetComponent<MeshCollider>().enabled = false;
                 obstacleObject.GetComponent<MeshRenderer>().enabled = false;
+                textoObject.GetComponent<MeshRenderer>().enabled = false;
+
                 Debug.Log("PUERTA 2 OPEN :D!!");
 
             }
