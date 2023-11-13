@@ -187,4 +187,14 @@ public class PlayerController : MonoBehaviour {
         moveForce = 20;
         Invoke(nameof(ResetJump), jumpCooldown);
     }
+
+    public float GetSpeed()
+    {
+        return moveForce;
+    }
+
+    public void SetSpeed(float speed)
+    {
+        this.moveForce = speed;
+    }
 }

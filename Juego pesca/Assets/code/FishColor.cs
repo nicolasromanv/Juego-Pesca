@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FishColor : MonoBehaviour {
     public Material[] colors; // Arreglo de materiales
-    public float[] materialProbabilities; // Arreglo de probabilidades para cada material
+    public float[] materialProbabilities = { 0.3f, 0.25f, 0.2f, 0.15f, 0.1f}; // Arreglo de probabilidades para cada material
 
     private Renderer material; // Declaraci?n del campo material.
     private Transform fishSize;
@@ -85,5 +85,15 @@ public class FishColor : MonoBehaviour {
                 break;
         }
         return vec;
+    }
+
+    public float[] GetRarezas()
+    {
+        return materialProbabilities;
+    }
+
+    public void SetRarezas(float[] rarezas)
+    {
+        this.materialProbabilities = rarezas;
     }
 }
