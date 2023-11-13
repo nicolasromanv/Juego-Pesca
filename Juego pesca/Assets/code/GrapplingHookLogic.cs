@@ -39,7 +39,11 @@ namespace Grapple {
         public TextMeshProUGUI winLabel;
         public TextMeshProUGUI misionDescription;
         public TextMeshProUGUI economiaPlateada;
+        public TextMeshProUGUI economiaPlateadaTienda;
+        
         public Timer timer;
+        public GameObject tiendaContainer;
+        public GameObject UIContainer;
 
         private LineRenderer lr;
         private Transform anchor;
@@ -67,12 +71,20 @@ namespace Grapple {
             startMission = false;
             money = 0;
             economiaPlateada.text = "Alhajas: " + money;
+            economiaPlateadaTienda.text = "Alhajas: " + money;
             ResetCounters();
             lr = GetComponent<LineRenderer>();
             defaultAirMultiplier = pl.getAirMultiplier();
             grappleSound = GetComponent<AudioSource>();
 
             hookDeplyed = false;
+        }
+
+        public void LeaveStore()
+        {
+            tiendaContainer.SetActive(false);
+            UIContainer.SetActive(true);
+            inStore = false;
         }
 
         void Update() {
@@ -136,6 +148,9 @@ namespace Grapple {
             if (Input.GetKeyDown(KeyCode.E) && inStore)
             {
                 //open store panel
+                tiendaContainer.SetActive(!tiendaContainer.activeSelf);
+                UIContainer.SetActive(!tiendaContainer.activeSelf);
+
             }
 
             //detiene el gancho al morir
@@ -370,6 +385,26 @@ namespace Grapple {
             SetContadores(5, "Total", totalFishes);
         }
 
+        public int GetMoney()
+        {
+            return money;
+        }
+
+        public void SetMoney(int money)
+        {
+            this.money=money;
+        }
+
+        public float GetAlcance()
+        {
+            return maxDistance;
+        }
+
+        public void SetAlcance(float rango)
+        {
+            this.maxDistance = rango;
+        }
+
         void WinChecker(){
             Debug.Log(rarezasList.IndexOf(rarezasData));
             float tiempoActual = timer.GetTimer();
@@ -379,6 +414,7 @@ namespace Grapple {
                     // economia plateada
                     money += 100;
                     economiaPlateada.text = "Alhajas: " + money;
+                    economiaPlateadaTienda.text = "Alhajas: " + money;
                     misionDescription.text = "";
                     ResetCounters();
                     timer.SetPause(true);

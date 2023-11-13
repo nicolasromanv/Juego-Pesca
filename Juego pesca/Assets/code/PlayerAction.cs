@@ -32,7 +32,7 @@ public class PlayerAction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             ObjectToShow.SetActive(false);
-            hookLogic.inStore = false;
+            hookLogic.LeaveStore();
         }
     }
 }
