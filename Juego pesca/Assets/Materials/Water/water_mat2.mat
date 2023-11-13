@@ -93,7 +93,7 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _Depth: 14.23
+    - _Depth: 25
     - _Depth_fade: 1
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
@@ -105,13 +105,13 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _Normal_strength: 0.19
+    - _Normal_strength: 0.5
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Refract_strength: 0.059
+    - _Refract_strength: 0.06
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -126,8 +126,8 @@ Material:
     - _val: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.34456214, g: 0.8396226, b: 0.656355, a: 0}
-    - _Depth_color: {r: 0, g: 0.39287692, b: 0.4716981, a: 0.6392157}
+    - _Color: {r: 0, g: 0.509434, b: 0.3169153, a: 0}
+    - _Depth_color: {r: 0, g: 0.23529412, b: 0.22913933, a: 0.6392157}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Shore_color: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
