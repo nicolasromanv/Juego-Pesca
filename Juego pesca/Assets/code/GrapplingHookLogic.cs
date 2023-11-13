@@ -37,6 +37,10 @@ namespace Grapple {
         [Header("UI")]
         public TextMeshProUGUI winLabel;
         public TextMeshProUGUI misionDescription;
+<<<<<<< HEAD
+=======
+        public TextMeshProUGUI economiaPlateada;
+>>>>>>> parent of 34b0e6d (Some progress in the economy system)
         public Timer timer;
 
         private LineRenderer lr;
@@ -62,6 +66,11 @@ namespace Grapple {
 
         void Start() {
             startMission = false;
+<<<<<<< HEAD
+=======
+            money = 0;
+            economiaPlateada.text = "Alhajas: " + money;
+>>>>>>> parent of 34b0e6d (Some progress in the economy system)
             ResetCounters();
             lr = GetComponent<LineRenderer>();
             defaultAirMultiplier = pl.getAirMultiplier();
@@ -131,6 +140,14 @@ namespace Grapple {
                 }
             }
 
+<<<<<<< HEAD
+=======
+            if (Input.GetKeyDown(KeyCode.E) && inStore)
+            {
+                //open store panel
+            }
+
+>>>>>>> parent of 34b0e6d (Some progress in the economy system)
             //detiene el gancho al morir
             if (player.position.y <= 43.5f) {
                 StopHook();
@@ -371,6 +388,12 @@ namespace Grapple {
             if (rarezasList.IndexOf(rarezasData) != -1){
                 if ((rarezasCounter[rarezasList.IndexOf(rarezasData)] == cantidad) && tiempoActual > 0){
                     winLabel.text = "Misión cumplida";
+<<<<<<< HEAD
+=======
+                    // economia plateada
+                    money += 100;
+                    economiaPlateada.text = "Alhajas: " + money;
+>>>>>>> parent of 34b0e6d (Some progress in the economy system)
                     misionDescription.text = "";
                     timer.SetPause(true);
                 }
