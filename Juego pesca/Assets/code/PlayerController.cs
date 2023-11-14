@@ -131,7 +131,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         //resetea al jugador al morir
-        if (transform.position.y <= 0.0f) {
+        if (transform.position.y <= 42.5f) {
             deathSound.Play();
             transform.position = new Vector3(-87f, 50f, 19f);
             mouseX = 0;
@@ -141,19 +141,6 @@ public class PlayerController : MonoBehaviour {
             orientation.rotation = Quaternion.identity;
             cam.transform.rotation = startRot;
         }
-        //--------------------------------------------------
-        // "WAYPOINT" AL SPAWN.
-        if(Input.GetKeyDown(KeyCode.Alpha1)){
-            Debug.Log("Tecla 1 presionada");
-            transform.position = new Vector3(-87f, 50f, 19f);
-            mouseX = 0;
-            mouseY = 0;
-            xCamRotation = 0;
-            yCamRotation = 90;
-            orientation.rotation = Quaternion.identity;
-            cam.transform.rotation = startRot;
-        }
-        //--------------------------------------------------
     }
     private void FixedUpdate() {
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
@@ -186,5 +173,15 @@ public class PlayerController : MonoBehaviour {
         transform.parent = null;
         moveForce = 20;
         Invoke(nameof(ResetJump), jumpCooldown);
+    }
+
+    public float GetSpeed()
+    {
+        return moveForce;
+    }
+
+    public void SetSpeed(float speed)
+    {
+        this.moveForce = speed;
     }
 }

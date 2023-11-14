@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class FishColor : MonoBehaviour {
     public Material[] colors; // Arreglo de materiales
-    public float[] materialProbabilities; // Arreglo de probabilidades para cada material
+    public float[] materialProbabilities = { 0.3f, 0.25f, 0.2f, 0.15f, 0.1f}; // Arreglo de probabilidades para cada material
 
-    private Renderer material; // Declaraci?n del campo material.
+    private Renderer material; // Declaración del campo material.
     private Transform fishSize;
 
     // Start is called before the first frame update
@@ -16,7 +16,7 @@ public class FishColor : MonoBehaviour {
 
     public void AssignRandomMaterial() {
         if (colors.Length == 0 || materialProbabilities.Length != colors.Length) {
-            Debug.LogError("Asegúrate de que los arreglos de materiales y probabilidades sean v?lidos.");
+            Debug.LogError("Asegúrate de que los arreglos de materiales y probabilidades sean válidos.");
             return;
         }
 
@@ -27,10 +27,10 @@ public class FishColor : MonoBehaviour {
             cumulativeProbabilities[i] = cumulativeProbabilities[i - 1] + materialProbabilities[i];
         }
 
-        // Genera un n?mero aleatorio dentro del rango total de probabilidades
+        // Genera un número aleatorio dentro del rango total de probabilidades
         float randomValue = Random.Range(0f, cumulativeProbabilities[cumulativeProbabilities.Length - 1]);
 
-        // Encuentra el ?ndice del material en funci?n del valor aleatorio
+        // Encuentra el índice del material en función del valor aleatorio
         int selectedMaterialIndex = 0;
         for (int i = 0; i < cumulativeProbabilities.Length; i++) {
             if (randomValue <= cumulativeProbabilities[i]) {
@@ -85,5 +85,15 @@ public class FishColor : MonoBehaviour {
                 break;
         }
         return vec;
+    }
+
+    public float[] GetRarezas()
+    {
+        return materialProbabilities;
+    }
+
+    public void SetRarezas(float[] rarezas)
+    {
+        this.materialProbabilities = rarezas;
     }
 }
